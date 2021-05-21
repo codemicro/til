@@ -118,9 +118,10 @@ func makeTILMarkdown(tils []*tilCategory) (string, error) {
 			}
 
 			sb.WriteString(md.Format("2006-01-02"))
+			sb.WriteRune('\n')
 		}
 
-		sb.WriteString("\n\n")
+		sb.WriteString("\n")
 
 	}
 
