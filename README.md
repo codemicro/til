@@ -6,10 +6,10 @@ As of the last count, there are 2 TILs!
 
 ---
 
-## githubactions
+### githubactions
 
 * [Continue a GitHub Actions workflow if a step errors](githubActions/actions-continueOnError.md) - 2021-05-21
 
-## go
+### go
 
 * [Labels in Golang](go/go-labels.md) - 2021-05-21

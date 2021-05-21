@@ -93,7 +93,7 @@ func listTILs() (x []*tilCategory, err error) {
 	return
 }
 
-const headerLevel = "##"
+const headerLevel = "###"
 
 func makeTILMarkdown(tils []*tilCategory) (string, error) {
 	var sb strings.Builder
