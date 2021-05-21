@@ -15,3 +15,7 @@ If one of the above strings is present in any of the commit messages in your pus
 ## `pull_request` events
 
 If the `HEAD` commit in a PR includes any of the following strings in the commit message, no workflows will be run on that pull request.
+
+---
+
+[Source](https://github.blog/changelog/2021-02-08-github-actions-skip-pull-request-and-push-workflows-with-skip-ci/)
