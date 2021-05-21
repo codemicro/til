@@ -2,7 +2,7 @@
 
 If a step in a GitHub Actions workflow step fails (ie. returns an exit code that's not zero), the entire workflow run will abort and report as failed.
 
-In some situations, it may be impossible to avoid a step returning a non-zero exit code. This can be dealt with using the `continue-on-error` parameter for a step.
+In some situations, it may be impossible to avoid a step returning a non-zero exit code. This can be dealt with using the [`continue-on-error` parameter](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepscontinue-on-error) for a step.
 
 ```yaml
 - name: Git commit and push
