@@ -120,9 +120,11 @@ func makeTILMarkdown(tils []*tilCategory) (string, error) {
 			sb.WriteString(md.Format("2006-01-02"))
 		}
 
+		sb.WriteString("\n\n")
+
 	}
 
-	return strings.TrimSuffix(sb.String(), "\n"), nil
+	return strings.TrimSpace(sb.String()), nil
 }
 
 func getFileModDate(file string) (time.Time, error) {
