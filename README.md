@@ -2,9 +2,13 @@
 
 Inspired by [simonw/til](https://github.com/simonw/til) and (indirectly) [jbranchaud/til](https://github.com/jbranchaud/til).
 
-As of the last count, there are 2 TILs!
+As of the last count, there are 3 TILs!
 
 ---
+
+### git
+
+* [Get the last modified date of a file](git/git-lastModDate.md) - 2021-05-21
 
 ### githubactions
 
