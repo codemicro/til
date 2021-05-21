@@ -1,0 +1,34 @@
+name: Build
+
+on:
+  push:
+
+jobs:
+  mage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+      
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16 # TODO
+
+      - name: Run Mage
+        uses: magefile/mage-action@v1
+        with:
+          version: latest
+          args: -v generateReadme
+
+      - name: Commit changes
+        run: |
+          git config user.email 'actions@github.com'
+          git config user.name 'github-actions'
+          git add README.md
+          git commit -m 'Update README.md'
+          git push origin HEAD:${{ github.ref }}
+        continue-on-error: true # if there's nothing changed, this step would error
