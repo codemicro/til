@@ -1,2 +1,4 @@
 github.com/magefile/mage v1.11.0 h1:C/55Ywp9BpgVVclD3lRnSYCwXTYxmSppIgLeDYlNuls=
 github.com/magefile/mage v1.11.0/go.mod h1:z5UZb/iS3GoOSn0JgWuiw7dxlurVYTu+/jHXqQg881A=
+github.com/stevelacy/daz v0.1.4 h1:ugmff/D7D764wZjXSgSryEINE/bi+Xddllw3JQQGbWk=
+github.com/stevelacy/daz v0.1.4/go.mod h1:AbK6DzjiIL15r4bQtcFvOBAvDGMXoh+uIG26NRUugt0=

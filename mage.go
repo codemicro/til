@@ -4,6 +4,8 @@ package main
 
 import (
 	"bytes"
+	_ "embed"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -14,6 +16,7 @@ import (
 	"time"
 
 	"github.com/magefile/mage/sh"
+	"github.com/stevelacy/daz"
 )
 
 type til struct {
@@ -30,6 +33,7 @@ type tilCategory struct {
 
 var mdHeaderRegexp = regexp.MustCompile(`(?m)# (.+)\n?`)
 
+// listTILs walks the current working directory and finds all valid TILs
 func listTILs() (x []*tilCategory, numTILs int, err error) {
 
 	tempTILs := make(map[string][]*til) // category as key
@@ -80,7 +84,7 @@ func listTILs() (x []*tilCategory, numTILs int, err error) {
 				Name:     name,
 				category: category,
 				Path:     path,
-				Date: 	  date,
+				Date:     date,
 			})
 
 			return nil
@@ -106,6 +110,7 @@ func listTILs() (x []*tilCategory, numTILs int, err error) {
 
 const tilDateFormat = "2006-01-02"
 
+// makeTILMarkdown generates Markdown from a []*tilCategory to make a list of TILs
 func makeTILMarkdown(tils []*tilCategory) (string, error) {
 
 	const headerLevel = "###"
@@ -136,6 +141,60 @@ func makeTILMarkdown(tils []*tilCategory) (string, error) {
 	return strings.TrimSpace(sb.String()), nil
 }
 
+// renderAnchor renders a HTML anchor tag
+func renderAnchor(text, url string) func() string {
+	return daz.H("a", daz.Attr{
+		"href":   url,
+		"target": "_blank",
+		"rel":    "noopener",
+	}, daz.UnsafeContent(text))
+}
+
+// makeTILHTML generates HTML from a []*tilCategory to make a list of TILs
+func makeTILHTML(tils []*tilCategory) (string, error) {
+
+	const headerLevel = "h3"
+	
+	var parts []interface{}
+	for _, category := range tils {
+
+		header := daz.H(headerLevel, category.Name)
+
+		var entries []daz.HTML
+		for _, til := range category.Entries {
+
+			x := daz.H("li", daz.UnsafeContent(renderAnchor(til.Name, til.Path)()), " - "+til.Date.Format(tilDateFormat))
+			entries = append(entries, x)
+		}
+
+		parts = append(parts, []daz.HTML{header, daz.H("ul", entries)})
+	}
+
+	return daz.H("div", parts...)(), nil
+}
+
+//go:embed page.template.html
+var htmlPageTemplate []byte
+
+// renderHTMLPage renders a complete HTML page
+func renderHTMLPage(title, head, body string) ([]byte, error) {
+
+	tpl, err := template.New("page").Parse(string(htmlPageTemplate))
+	if err != nil {
+		return nil, err
+	}
+	outputBuf := new(bytes.Buffer)
+	
+	tpl.Execute(outputBuf, struct {
+		Title string
+		PageContent string
+		HeadContent string
+	}{PageContent: body, HeadContent: head, Title: title})
+
+	return outputBuf.Bytes(), nil
+}
+
+// getFileModDate gets the latest modification date from a tracked Git file. If no tracked file is found, the current date is returned
 func getFileModDate(file string) (time.Time, error) {
 
 	output, err := sh.Output("git", "log", "-1", "--format=%cd", file)
@@ -183,6 +242,51 @@ func GenerateReadme() error {
 
 	{
 		err := ioutil.WriteFile("README.md", outputReadmeBuf.Bytes(), 0644)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func GenerateHTML() error {
+
+	tils, numTILs, err := listTILs()
+	if err != nil {
+		return err
+	}
+
+	const pageTitle = "akp's TILs"
+
+	head := daz.H(
+		"div",
+		daz.H("h1", pageTitle),
+		daz.H(
+			"p",
+			daz.UnsafeContent(
+				fmt.Sprintf(
+					"There are currently %d TILs<br>Last modified %s<br>Repo: %s",
+					numTILs,
+					time.Now().Format(tilDateFormat),
+					renderAnchor("<code>codemicro/til</code>", "https://github.com/codemicro/til")(),
+				),
+			),
+		),
+	)
+
+	tilHTML, err := makeTILHTML(tils)
+	if err != nil {
+		return err
+	}
+
+	outputContent, err := renderHTMLPage(pageTitle, head(), tilHTML)
+	if err != nil {
+		return err
+	}
+
+	{
+		err := ioutil.WriteFile(".webui/index.html", outputContent, 0644)
 		if err != nil {
 			return err
 		}
