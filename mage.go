@@ -29,7 +29,7 @@ type tilCategory struct {
 
 var mdHeaderRegexp = regexp.MustCompile(`(?m)# (.+)\n?`)
 
-func listTILs() (x []*tilCategory, err error) {
+func listTILs() (x []*tilCategory, numTILs int, err error) {
 
 	tempTILs := make(map[string][]*til) // category as key
 
@@ -90,12 +90,17 @@ func listTILs() (x []*tilCategory, err error) {
 		return x[i].Name < x[j].Name
 	})
 
+	for _, y := range x {
+		numTILs += len(y.Entries)
+	}
+
 	return
 }
 
-const headerLevel = "###"
-
 func makeTILMarkdown(tils []*tilCategory) (string, error) {
+
+	const headerLevel = "###"
+
 	var sb strings.Builder
 
 	for _, category := range tils {
@@ -142,14 +147,9 @@ func getFileModDate(file string) (time.Time, error) {
 
 func GenerateReadme() error {
 
-	tils, err := listTILs()
+	tils, numTILs, err := listTILs()
 	if err != nil {
 		return err
-	}
-
-	var numTILs int
-	for _, x := range tils {
-		numTILs += len(x.Entries)
 	}
 
 	var templateReadme string
@@ -175,7 +175,7 @@ func GenerateReadme() error {
 		tpl.Execute(outputReadmeBuf, struct {
 			NumTIL int
 			TILs   string
-		}{len(tils), md})
+		}{numTILs, md})
 	}
 
 	{
