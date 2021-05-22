@@ -207,6 +207,9 @@ func getFileModDate(file string) (time.Time, error) {
 	return time.Parse("Mon Jan 2 15:04:05 2006 -0700", output)
 }
 
+//go:embed README.template.md
+var readmeTemplate []byte
+
 func GenerateReadme() error {
 
 	tils, numTILs, err := listTILs()
@@ -214,18 +217,9 @@ func GenerateReadme() error {
 		return err
 	}
 
-	var templateReadme string
-	{
-		fcont, err := ioutil.ReadFile("README.template.md")
-		if err != nil {
-			return err
-		}
-		templateReadme = string(fcont)
-	}
-
 	var outputReadmeBuf *bytes.Buffer
 	{
-		tpl, err := template.New("readme").Parse(templateReadme)
+		tpl, err := template.New("readme").Parse(string(readmeTemplate))
 		if err != nil {
 			return err
 		}
@@ -285,11 +279,9 @@ func GenerateHTML() error {
 		return err
 	}
 
-	{
-		err := ioutil.WriteFile(".webui/index.html", outputContent, 0644)
-		if err != nil {
-			return err
-		}
+	err = ioutil.WriteFile(".webui/index.html", outputContent, 0644)
+	if err != nil {
+		return err
 	}
 
 	return nil
