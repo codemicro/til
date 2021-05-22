@@ -20,6 +20,7 @@ type til struct {
 	Name     string
 	category string
 	Path     string
+	Date     time.Time
 }
 
 type tilCategory struct {
@@ -70,10 +71,16 @@ func listTILs() (x []*tilCategory, numTILs int, err error) {
 			category := strings.Join(splitC[0:len(splitC)-1], "/")
 			categoryLower := strings.ToLower(category)
 
+			date, err := getFileModDate(path)
+			if err != nil {
+				return err
+			}
+
 			tempTILs[categoryLower] = append(tempTILs[categoryLower], &til{
 				Name:     name,
 				category: category,
 				Path:     path,
+				Date: 	  date,
 			})
 
 			return nil
@@ -97,6 +104,8 @@ func listTILs() (x []*tilCategory, numTILs int, err error) {
 	return
 }
 
+const tilDateFormat = "2006-01-02"
+
 func makeTILMarkdown(tils []*tilCategory) (string, error) {
 
 	const headerLevel = "###"
@@ -116,13 +125,7 @@ func makeTILMarkdown(tils []*tilCategory) (string, error) {
 			sb.WriteString("](")
 			sb.WriteString(til.Path)
 			sb.WriteString(") - ")
-
-			md, err := getFileModDate(til.Path)
-			if err != nil {
-				return "", err
-			}
-
-			sb.WriteString(md.Format("2006-01-02"))
+			sb.WriteString(til.Date.Format(tilDateFormat))
 			sb.WriteRune('\n')
 		}
 
