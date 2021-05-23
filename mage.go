@@ -332,9 +332,6 @@ func GenerateReadme() error {
 	return nil
 }
 
-//go:embed syntaxHighlight.html
-var syntaxHighlightingStyle string
-
 func GenerateHTML() error {
 
 	const outputDir = ".site"
@@ -418,7 +415,7 @@ func GenerateHTML() error {
 				),
 			)
 
-			renderedHTML, err := renderHTMLPage(fmt.Sprintf("%s - %s", til.Name, pageTitle), head(), string(mdHTML), syntaxHighlightingStyle)
+			renderedHTML, err := renderHTMLPage(fmt.Sprintf("%s - %s", til.Name, pageTitle), head(), string(mdHTML), "")
 			if err != nil {
 				return err
 			}
