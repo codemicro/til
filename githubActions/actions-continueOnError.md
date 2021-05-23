@@ -12,7 +12,7 @@ In some situations, it may be impossible to avoid a step returning a non-zero ex
     git add README.md
     git commit -m 'Update README.md'
     git push origin HEAD:${{ github.ref }}
-  continue-on-error: true # if there's nothing changed, Git would cause an error here
+  continue-on-error: true
 ```
 
 In this example, the workflow will complete as normal, even if Git complains that there is `nothing to commit` and that the `working tree clean`, like it would if nothing had been changed.
