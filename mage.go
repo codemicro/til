@@ -5,8 +5,11 @@ package main
 import (
 	"bytes"
 	_ "embed"
+	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
+	"net/http"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -21,6 +24,7 @@ import (
 
 type til struct {
 	Name     string
+	Contents string
 	category string
 	Path     string
 	Date     time.Time
@@ -31,7 +35,7 @@ type tilCategory struct {
 	Entries []*til
 }
 
-var mdHeaderRegexp = regexp.MustCompile(`(?m)# (.+)\n?`)
+var markdownHeaderRegexp = regexp.MustCompile(`(?m)# (.+)\n?`)
 
 // listTILs walks the current working directory and finds all valid TILs
 func listTILs() (x []*tilCategory, numTILs int, err error) {
@@ -55,6 +59,7 @@ func listTILs() (x []*tilCategory, numTILs int, err error) {
 			}
 
 			var name string
+			var contents string
 			{
 				fcont, err := ioutil.ReadFile(path)
 				if err != nil {
@@ -62,29 +67,32 @@ func listTILs() (x []*tilCategory, numTILs int, err error) {
 				}
 
 				// attempt to extract title from Markdown
-				if len(mdHeaderRegexp.Find(fcont)) != 0 {
-					subm := mdHeaderRegexp.FindSubmatch(fcont)
+				if len(markdownHeaderRegexp.Find(fcont)) != 0 {
+					subm := markdownHeaderRegexp.FindSubmatch(fcont)
 					name = strings.TrimSpace(string(subm[1]))
+					fcont = bytes.TrimSpace(markdownHeaderRegexp.ReplaceAll(fcont, nil))
 				} else {
 					// remove everything from the path after last `.` - in practise, this means removing the file extension
 					xp := strings.Split(splitC[len(splitC)-1], ".")
 					name = strings.Join(xp[0:len(splitC)-1], ".")
 				}
+
+				contents = string(fcont)
 			}
 
 			category := strings.Join(splitC[0:len(splitC)-1], "/")
-			categoryLower := strings.ToLower(category)
 
 			date, err := getFileModDate(path)
 			if err != nil {
 				return err
 			}
 
-			tempTILs[categoryLower] = append(tempTILs[categoryLower], &til{
+			tempTILs[category] = append(tempTILs[category], &til{
 				Name:     name,
 				category: category,
 				Path:     path,
 				Date:     date,
+				Contents: contents,
 			})
 
 			return nil
@@ -106,6 +114,29 @@ func listTILs() (x []*tilCategory, numTILs int, err error) {
 	}
 
 	return
+}
+
+// rewriteTILPaths clones `x` and replaces all occurences of `old` in each TIL's path with `new`
+func rewriteTILPaths(old, new string, x []*tilCategory) []*tilCategory {
+
+	newX := make([]*tilCategory, len(x))
+
+	for i, cat := range x {
+		ne := make([]*til, len(cat.Entries))
+		for j, catEnt := range cat.Entries {
+
+			y := *catEnt
+			ne[j] = &y
+
+			ne[j].Path = strings.ReplaceAll(ne[j].Path, old, new)
+		}
+
+		y := *cat
+		newX[i] = &y
+		newX[i].Entries = ne
+	}
+
+	return newX
 }
 
 const tilDateFormat = "2006-01-02"
@@ -141,20 +172,38 @@ func makeTILMarkdown(tils []*tilCategory) (string, error) {
 	return strings.TrimSpace(sb.String()), nil
 }
 
+var markdownImageRegexp = regexp.MustCompile(`(?m)!\[.+]\((.+)\)`)
+
+// listMarkdownImages lists all images in a Markdown document
+func listMarkdownImages(markdown string) []string {
+	x := markdownImageRegexp.FindAllStringSubmatch(markdown, -1)
+	if len(x) == 0 {
+		return nil
+	}
+	var y []string
+	for _, z := range x {
+		y = append(y, z[1])
+	}
+	return y
+}
+
 // renderAnchor renders a HTML anchor tag
-func renderAnchor(text, url string) func() string {
-	return daz.H("a", daz.Attr{
-		"href":   url,
-		"target": "_blank",
-		"rel":    "noopener",
-	}, daz.UnsafeContent(text))
+func renderAnchor(text, url string, newTab bool) func() string {
+	attrs := daz.Attr{
+		"href": url,
+		"rel":"noopener",
+	}
+	if newTab {
+		attrs["target"] = "_blank"
+	}
+	return daz.H("a", attrs, daz.UnsafeContent(text))
 }
 
 // makeTILHTML generates HTML from a []*tilCategory to make a list of TILs
 func makeTILHTML(tils []*tilCategory) (string, error) {
 
 	const headerLevel = "h3"
-	
+
 	var parts []interface{}
 	for _, category := range tils {
 
@@ -163,7 +212,7 @@ func makeTILHTML(tils []*tilCategory) (string, error) {
 		var entries []daz.HTML
 		for _, til := range category.Entries {
 
-			x := daz.H("li", daz.UnsafeContent(renderAnchor(til.Name, til.Path)()), " - "+til.Date.Format(tilDateFormat))
+			x := daz.H("li", daz.UnsafeContent(renderAnchor(til.Name, til.Path, false)()), " - "+til.Date.Format(tilDateFormat))
 			entries = append(entries, x)
 		}
 
@@ -177,21 +226,50 @@ func makeTILHTML(tils []*tilCategory) (string, error) {
 var htmlPageTemplate []byte
 
 // renderHTMLPage renders a complete HTML page
-func renderHTMLPage(title, head, body string) ([]byte, error) {
+func renderHTMLPage(title, titleBar, pageContent, extraHeadeContent string) ([]byte, error) {
 
 	tpl, err := template.New("page").Parse(string(htmlPageTemplate))
 	if err != nil {
 		return nil, err
 	}
 	outputBuf := new(bytes.Buffer)
-	
+
 	tpl.Execute(outputBuf, struct {
-		Title string
-		PageContent string
-		HeadContent string
-	}{PageContent: body, HeadContent: head, Title: title})
+		Title       string
+		Content string
+		PageTitleBar string
+		ExtraHeadContent string
+	}{Content: pageContent, PageTitleBar: titleBar, Title: title, ExtraHeadContent: extraHeadeContent})
+
+	time.Sleep(time.Second) // ratelimit?
 
 	return outputBuf.Bytes(), nil
+}
+
+// renderMarkdownToHTML renders GitHub flavoured Markdown to HTML using GitHub's API endpoint
+func renderMarkdownToHTML(markdown string) ([]byte, error) {
+
+	jsonBody, err := json.Marshal(map[string]string{"text": markdown})
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := http.Post("https://api.github.com/markdown", "application/json", bytes.NewBuffer(jsonBody))
+	if err != nil {
+		return nil, err
+	}
+
+	if resp.StatusCode != 200 {
+		return nil, fmt.Errorf("non-200 status code: %d", resp.StatusCode)
+	}
+
+	body, err := ioutil.ReadAll(resp.Body)
+	_ = resp.Body.Close()
+	if err != nil {
+		return nil, err
+	}
+
+	return body, nil
 }
 
 // getFileModDate gets the latest modification date from a tracked Git file. If no tracked file is found, the current date is returned
@@ -205,6 +283,27 @@ func getFileModDate(file string) (time.Time, error) {
 	}
 
 	return time.Parse("Mon Jan 2 15:04:05 2006 -0700", output)
+}
+
+func joinPath(x ...string) string {
+	return strings.Join(x, string(os.PathSeparator))
+}
+
+func copyFile(src, new string) error {
+	source, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer source.Close()
+
+	destination, err := os.Create(new)
+	if err != nil {
+		return err
+	}
+	defer destination.Close()
+
+	_, err = io.Copy(destination, source)
+	return err
 }
 
 //go:embed README.template.md
@@ -244,7 +343,12 @@ func GenerateReadme() error {
 	return nil
 }
 
+//go:embed syntaxHighlight.html
+var syntaxHighlightingStyle string
+
 func GenerateHTML() error {
+
+	const outputDir = ".site"
 
 	tils, numTILs, err := listTILs()
 	if err != nil {
@@ -263,26 +367,86 @@ func GenerateHTML() error {
 					"There are currently %d TILs<br>Last modified %s<br>Repo: %s",
 					numTILs,
 					time.Now().Format(tilDateFormat),
-					renderAnchor("<code>codemicro/til</code>", "https://github.com/codemicro/til")(),
+					renderAnchor("<code>codemicro/til</code>", "https://github.com/codemicro/til", false)(),
 				),
 			),
 		),
 	)
 
-	tilHTML, err := makeTILHTML(tils)
+	htmlTils := rewriteTILPaths(".md", ".html", tils)
+
+	tilHTML, err := makeTILHTML(htmlTils)
 	if err != nil {
 		return err
 	}
 
-	outputContent, err := renderHTMLPage(pageTitle, head(), tilHTML)
+	outputContent, err := renderHTMLPage(pageTitle, head(), tilHTML, "")
 	if err != nil {
 		return err
 	}
 
-	err = ioutil.WriteFile(".webui/index.html", outputContent, 0644)
+	_ = os.Mkdir(outputDir, os.ModeDir)
+
+	err = ioutil.WriteFile(joinPath(outputDir, "index.html"), outputContent, 0644)
 	if err != nil {
 		return err
 	}
+
+	for _, tilCat := range tils {
+		_ = os.Mkdir(joinPath(outputDir, tilCat.Name), os.ModeDir)
+
+		for _, til := range tilCat.Entries {
+
+			pathDir := filepath.Dir(til.Path)
+
+			// copy images
+			for _, relPath := range listMarkdownImages(til.Contents) {
+				err = copyFile(joinPath(pathDir, relPath), joinPath(outputDir, tilCat.Name, relPath))
+				if err != nil {
+					return err
+				}
+			}
+
+			// render and save as HTML
+			mdHTML, err := renderMarkdownToHTML(til.Contents)
+			if err != nil {
+				return err
+			}
+
+			head := daz.H(
+				"div",
+				daz.H("h1", til.Name),
+				daz.H(
+					"p",
+					daz.UnsafeContent(
+						fmt.Sprintf(
+							"%s<br>Date: %s<br>Category: %s",
+							renderAnchor("Back to index", "../", false)(),
+							til.Date.Format(tilDateFormat),
+							tilCat.Name,
+						),
+					),
+				),
+			)
+
+			renderedHTML, err := renderHTMLPage(fmt.Sprintf("%s - %s", til.Name, pageTitle), head(), string(mdHTML), syntaxHighlightingStyle)
+			if err != nil {
+				return err
+			}
+
+			err = ioutil.WriteFile(joinPath(outputDir, tilCat.Name, strings.ReplaceAll(filepath.Base(til.Path), ".md", ".html")), renderedHTML, 0644)
+			if err != nil {
+				return err
+			}
+
+		}
+
+	}
+
+	// Tasks:
+	// 2. Make category directories
+	// 3. Copy images to correct directories
+	// 4. Render and save each TIL as HTML
 
 	return nil
 }
