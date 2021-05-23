@@ -5,11 +5,9 @@ package main
 import (
 	"bytes"
 	_ "embed"
-	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
-	"net/http"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -20,6 +18,9 @@ import (
 
 	"github.com/magefile/mage/sh"
 	"github.com/stevelacy/daz"
+	"github.com/yuin/goldmark"
+	highlighting "github.com/yuin/goldmark-highlighting"
+	"github.com/yuin/goldmark/extension"
 )
 
 type til struct {
@@ -191,7 +192,7 @@ func listMarkdownImages(markdown string) []string {
 func renderAnchor(text, url string, newTab bool) func() string {
 	attrs := daz.Attr{
 		"href": url,
-		"rel":"noopener",
+		"rel":  "noopener",
 	}
 	if newTab {
 		attrs["target"] = "_blank"
@@ -235,9 +236,9 @@ func renderHTMLPage(title, titleBar, pageContent, extraHeadeContent string) ([]b
 	outputBuf := new(bytes.Buffer)
 
 	tpl.Execute(outputBuf, struct {
-		Title       string
-		Content string
-		PageTitleBar string
+		Title            string
+		Content          string
+		PageTitleBar     string
 		ExtraHeadContent string
 	}{Content: pageContent, PageTitleBar: titleBar, Title: title, ExtraHeadContent: extraHeadeContent})
 
@@ -246,30 +247,18 @@ func renderHTMLPage(title, titleBar, pageContent, extraHeadeContent string) ([]b
 	return outputBuf.Bytes(), nil
 }
 
-// renderMarkdownToHTML renders GitHub flavoured Markdown to HTML using GitHub's API endpoint
+var markdownRenderer = goldmark.New(goldmark.WithExtensions(extension.GFM, highlighting.NewHighlighting(
+	highlighting.WithStyle("github"),
+)))
+
+// renderMarkdownToHTML renders GitHub flavoured Markdown to HTML
 func renderMarkdownToHTML(markdown string) ([]byte, error) {
-
-	jsonBody, err := json.Marshal(map[string]string{"text": markdown})
+	output := new(bytes.Buffer)
+	err := markdownRenderer.Convert([]byte(markdown), output)
 	if err != nil {
 		return nil, err
 	}
-
-	resp, err := http.Post("https://api.github.com/markdown", "application/json", bytes.NewBuffer(jsonBody))
-	if err != nil {
-		return nil, err
-	}
-
-	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("non-200 status code: %d", resp.StatusCode)
-	}
-
-	body, err := ioutil.ReadAll(resp.Body)
-	_ = resp.Body.Close()
-	if err != nil {
-		return nil, err
-	}
-
-	return body, nil
+	return output.Bytes(), nil
 }
 
 // getFileModDate gets the latest modification date from a tracked Git file. If no tracked file is found, the current date is returned
