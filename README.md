@@ -2,7 +2,7 @@
 
 Inspired by [simonw/til](https://github.com/simonw/til) and (indirectly) [jbranchaud/til](https://github.com/jbranchaud/til).
 
-As of the last count, there are 4 TILs!
+As of the last count, there are 5 TILs!
 
 ---
 
@@ -18,3 +18,7 @@ As of the last count, there are 4 TILs!
 ### go
 
 * [Labels in Golang](go/go-labels.md) - 2021-05-21
+
+### html
+
+* [Highlighting text with pure HTML](html/html-highlightText.md) - 2021-05-24
