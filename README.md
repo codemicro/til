@@ -2,12 +2,13 @@
 
 Inspired by [simonw/til](https://github.com/simonw/til) and (indirectly) [jbranchaud/til](https://github.com/jbranchaud/til).
 
-As of the last count, there are 6 TILs!
+As of the last count, there are 7 TILs!
 
 ---
 
 ### bash
 
+* [Copy to the global clipboard form the command line](bash/bash-clipboard.md) - 2021-05-27
 * [Run a command in a background process](bash/bash-launchInBackground.md) - 2021-05-25
 
 ### git
