@@ -24,9 +24,9 @@ As of the last count, there are 7 TILs!
 
 * [Labels in Golang](go/go-labels.md) - 2021-05-21
 
-### html
+### htmlcss
 
-* [Highlighting text with pure HTML](html/html-highlightText.md) - 2021-05-24
+* [Highlighting text with pure HTML](htmlcss/html-highlightText.md) - 2021-05-27
 
 ---
 
