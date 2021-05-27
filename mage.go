@@ -71,7 +71,15 @@ func listTILs() (x []*tilCategory, numTILs int, err error) {
 				if len(markdownHeaderRegexp.Find(fcont)) != 0 {
 					subm := markdownHeaderRegexp.FindSubmatch(fcont)
 					name = strings.TrimSpace(string(subm[1]))
-					fcont = bytes.TrimSpace(markdownHeaderRegexp.ReplaceAll(fcont, nil))
+					var doneOnce bool
+					fcont = bytes.TrimSpace(markdownHeaderRegexp.ReplaceAllFunc(fcont, func(b []byte) []byte {
+						if doneOnce {
+							return b
+						} else {
+							doneOnce = true
+							return nil
+						}
+					}))
 				} else {
 					// remove everything from the path after last `.` - in practise, this means removing the file extension
 					xp := strings.Split(splitC[len(splitC)-1], ".")
@@ -253,6 +261,9 @@ var markdownRenderer = goldmark.New(goldmark.WithExtensions(extension.GFM, highl
 
 // renderMarkdownToHTML renders GitHub flavoured Markdown to HTML
 func renderMarkdownToHTML(markdown string) ([]byte, error) {
+
+	fmt.Println("Rendering:", markdown)
+
 	output := new(bytes.Buffer)
 	err := markdownRenderer.Convert([]byte(markdown), output)
 	if err != nil {
