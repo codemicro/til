@@ -8,4 +8,6 @@ To add emphasis to text, as if to highlight it, in HTML, it's possible to use th
 </p>
 ```
 
-Result: ![Example result](html-highlightExample.png)
+Result:
+
+![Example result](html-highlightExample.png)
