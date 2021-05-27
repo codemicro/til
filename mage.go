@@ -437,10 +437,5 @@ func GenerateHTML() error {
 
 	}
 
-	// Tasks:
-	// 2. Make category directories
-	// 3. Copy images to correct directories
-	// 4. Render and save each TIL as HTML
-
 	return nil
 }
