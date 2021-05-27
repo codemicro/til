@@ -379,7 +379,7 @@ func GenerateHTML() error {
 		return err
 	}
 
-	_ = os.Mkdir(outputDir, os.ModeDir)
+	_ = os.Mkdir(outputDir, 0777)
 
 	err = ioutil.WriteFile(joinPath(outputDir, "index.html"), outputContent, 0644)
 	if err != nil {
@@ -387,7 +387,7 @@ func GenerateHTML() error {
 	}
 
 	for _, tilCat := range tils {
-		_ = os.Mkdir(joinPath(outputDir, tilCat.Name), os.ModeDir)
+		_ = os.Mkdir(joinPath(outputDir, tilCat.Name), 0777)
 
 		for _, til := range tilCat.Entries {
 

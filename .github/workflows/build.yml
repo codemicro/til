@@ -16,13 +16,13 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.16 # TODO
+          go-version: 1.16
 
       - name: Run Mage
         uses: magefile/mage-action@v1
         with:
           version: latest
-          args: -v generateReadme
+          args: -v generateReadme generateHTML
 
       - name: Commit changes
         run: |
@@ -32,3 +32,10 @@ jobs:
           git commit -m 'Update README.md'
           git push origin HEAD:${{ github.ref }}
         continue-on-error: true # if there's nothing changed, this step would error
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v1.1.0
+        env:
+          PUBLISH_DIR: .site
+          PUBLISH_BRANCH: gh-pages
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
