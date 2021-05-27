@@ -261,9 +261,6 @@ var markdownRenderer = goldmark.New(goldmark.WithExtensions(extension.GFM, highl
 
 // renderMarkdownToHTML renders GitHub flavoured Markdown to HTML
 func renderMarkdownToHTML(markdown string) ([]byte, error) {
-
-	fmt.Println("Rendering:", markdown)
-
 	output := new(bytes.Buffer)
 	err := markdownRenderer.Convert([]byte(markdown), output)
 	if err != nil {

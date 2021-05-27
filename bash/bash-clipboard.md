@@ -1,4 +1,4 @@
-# Copy to the global clipboard form the command line
+# Copy to the global clipboard from the command line
 
 It's possible to write to the global clipboard from the command line using `xclip`.
 

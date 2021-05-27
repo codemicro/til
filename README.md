@@ -8,7 +8,7 @@ As of the last count, there are 7 TILs!
 
 ### bash
 
-* [Copy to the global clipboard form the command line](bash/bash-clipboard.md) - 2021-05-27
+* [Copy to the global clipboard from the command line](bash/bash-clipboard.md) - 2021-05-27
 * [Run a command in a background process](bash/bash-launchInBackground.md) - 2021-05-25
 
 ### git
