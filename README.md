@@ -1,6 +1,6 @@
 # Today I learned...
 
-Inspired by [simonw/til](https://github.com/simonw/til) and (indirectly) [jbranchaud/til](https://github.com/jbranchaud/til).
+You can also view this list at [https://pages.tdpain.net/til](https://pages.tdpain.net/til).
 
 As of the last count, there are 7 TILs!
 
@@ -27,3 +27,7 @@ As of the last count, there are 7 TILs!
 ### html
 
 * [Highlighting text with pure HTML](html/html-highlightText.md) - 2021-05-24
+
+---
+
+Inspired by [simonw/til](https://github.com/simonw/til) and (indirectly) [jbranchaud/til](https://github.com/jbranchaud/til).
