@@ -2,7 +2,7 @@
 
 You can also view this list at [https://pages.tdpain.net/til](https://pages.tdpain.net/til).
 
-As of the last count, there are 7 TILs!
+As of the last count, there are 8 TILs!
 
 ---
 
@@ -26,6 +26,7 @@ As of the last count, there are 7 TILs!
 
 ### htmlcss
 
+* [Horizontally and vertically center an item in its parent](htmlcss/css-centerItem.md) - 2021-05-27
 * [Highlighting text with pure HTML](htmlcss/html-highlightText.md) - 2021-05-27
 
 ---
