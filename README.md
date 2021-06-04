@@ -2,7 +2,7 @@
 
 You can also view this list at [https://pages.tdpain.net/til](https://pages.tdpain.net/til).
 
-As of the last count, there are 10 TILs!
+As of the last count, there are 11 TILs!
 
 ---
 
@@ -10,6 +10,10 @@ As of the last count, there are 10 TILs!
 
 * [Copy to the global clipboard from the command line](bash/bash-clipboard.md) - 2021-05-27
 * [Run a command in a background process](bash/bash-launchInBackground.md) - 2021-05-25
+
+### docker
+
+* [Loading `.env` files into a Docker container](docker/docker-loadEnvFiles.md) - 2021-06-04
 
 ### git
 
