@@ -2,7 +2,7 @@
 
 You can also view this list at [https://pages.tdpain.net/til](https://pages.tdpain.net/til).
 
-As of the last count, there are 12 TILs!
+As of the last count, there are 13 TILs!
 
 ---
 
@@ -13,6 +13,7 @@ As of the last count, there are 12 TILs!
 
 ### docker
 
+* [Automatically restart a running Docker container](docker/docker-autoUpdateRunningContainer.md) - 2021-06-05
 * [Loading `.env` files into a Docker container](docker/docker-loadEnvFiles.md) - 2021-06-04
 
 ### git
