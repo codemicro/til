@@ -16,4 +16,5 @@ print(f"{'hi=}") # -> "'hi'='hi'"
 ```
 
 See also: [Formatted string literals](https://docs.python.org/3/reference/lexical_analysis.html#f-strings)
+
 Source: [Reddit](https://reddit.com/r/learnpython/comments/nur6o9/til_ive_been_making_debugging_statements_harder/)
