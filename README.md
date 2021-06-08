@@ -2,7 +2,7 @@
 
 You can also view this list at [https://pages.tdpain.net/til](https://pages.tdpain.net/til).
 
-As of the last count, there are 13 TILs!
+As of the last count, there are 14 TILs!
 
 ---
 
@@ -19,6 +19,7 @@ As of the last count, there are 13 TILs!
 ### git
 
 * [Get the last modified date of a file](git/git-lastModDate.md) - 2021-05-21
+* [List all staged files in a Git repository in plaintext](git/git-plaintextListStagedFiles.md) - 2021-06-08
 
 ### githubActions
 
