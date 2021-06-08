@@ -2,7 +2,7 @@
 
 You can also view this list at [https://pages.tdpain.net/til](https://pages.tdpain.net/til).
 
-As of the last count, there are 14 TILs!
+As of the last count, there are 15 TILs!
 
 ---
 
@@ -38,6 +38,7 @@ As of the last count, there are 14 TILs!
 ### python
 
 * [Defining a flag using `argparse`](python/python-flagsInArgparse.md) - 2021-06-04
+* [Show the used expression in an f-string](python/python-fstringShowExpression.md) - 2021-06-08
 * [Loading JSON into a class using Marshmallow Dataclasses](python/python-loadingJSONIntoClasses.md) - 2021-06-02
 * [Type hinting in Python](python/python-typeHinting.md) - 2021-06-02
 
