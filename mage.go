@@ -250,8 +250,6 @@ func renderHTMLPage(title, titleBar, pageContent, extraHeadeContent string) ([]b
 		ExtraHeadContent string
 	}{Content: pageContent, PageTitleBar: titleBar, Title: title, ExtraHeadContent: extraHeadeContent})
 
-	time.Sleep(time.Second) // ratelimit?
-
 	return outputBuf.Bytes(), nil
 }
 
