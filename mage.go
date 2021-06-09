@@ -338,7 +338,7 @@ func GenerateReadme() error {
 	return nil
 }
 
-func GenerateHTML() error {
+func GenerateSite() error {
 
 	const outputDir = ".site"
 
