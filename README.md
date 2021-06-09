@@ -2,7 +2,7 @@
 
 You can also view this list at [https://pages.tdpain.net/til](https://pages.tdpain.net/til).
 
-As of the last count, there are 15 TILs!
+As of the last count, there are 16 TILs!
 
 ---
 
@@ -34,6 +34,7 @@ As of the last count, there are 15 TILs!
 
 * [Horizontally and vertically center an item in its parent](htmlcss/css-centerItem.md) - 2021-05-27
 * [Highlighting text with pure HTML](htmlcss/html-highlightText.md) - 2021-05-27
+* [Add an angled banner in the top left corner of a page](htmlcss/htmlcss-topCornerBanner.md) - 2021-06-09
 
 ### python
 
