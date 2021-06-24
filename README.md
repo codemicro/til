@@ -2,7 +2,7 @@
 
 You can also view this list at [https://pages.tdpain.net/til](https://pages.tdpain.net/til).
 
-As of the last count, there are 18 TILs!
+As of the last count, there are 19 TILs!
 
 ---
 
@@ -10,6 +10,7 @@ As of the last count, there are 18 TILs!
 
 * [Copy to the global clipboard from the command line](bash/bash-clipboard.md) - 2021-05-27
 * [Exit codes in Bash scripts](bash/bash-commandExitCode.md) - 2021-06-16
+* [Get the PID of the last run command](bash/bash-lastCommandPID.md) - 2021-06-24
 * [Run a command in a background process](bash/bash-launchInBackground.md) - 2021-05-25
 
 ### docker
