@@ -2,7 +2,7 @@
 
 You can also view this list at [https://pages.tdpain.net/til](https://pages.tdpain.net/til).
 
-As of the last count, there are 24 TILs!
+As of the last count, there are 25 TILs!
 
 ---
 
@@ -34,6 +34,7 @@ As of the last count, there are 24 TILs!
 
 ### go
 
+* [Get the path and name of the currently running executable](go/go-currentExecutable.md) - 2021-07-17
 * [Labels in Golang](go/go-labels.md) - 2021-05-21
 * [Working with the `/tmp` directory](go/go-tempDir.md) - 2021-07-12
 
