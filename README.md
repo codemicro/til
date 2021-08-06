@@ -2,7 +2,7 @@
 
 You can also view this list at [https://pages.tdpain.net/til](https://pages.tdpain.net/til).
 
-As of the last count, there are 27 TILs!
+As of the last count, there are 28 TILs!
 
 ---
 
@@ -48,6 +48,10 @@ As of the last count, there are 27 TILs!
 ### jetbrains
 
 * [Scopes in JetBrains IDEs](jetbrains/jetbrains-scopes.md) - 2021-06-24
+
+### misc
+
+* [Extract a .txz file](misc/misc-exctractTxzFile.md) - 2021-08-06
 
 ### python
 
