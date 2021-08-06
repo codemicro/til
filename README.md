@@ -2,7 +2,7 @@
 
 You can also view this list at [https://pages.tdpain.net/til](https://pages.tdpain.net/til).
 
-As of the last count, there are 26 TILs!
+As of the last count, there are 27 TILs!
 
 ---
 
@@ -55,6 +55,10 @@ As of the last count, there are 26 TILs!
 * [Show the used expression in an f-string](python/python-fstringShowExpression.md) - 2021-06-08
 * [Loading JSON into a class using Marshmallow Dataclasses](python/python-loadingJSONIntoClasses.md) - 2021-06-02
 * [Type hinting in Python](python/python-typeHinting.md) - 2021-06-02
+
+### swf
+
+* [Decompile a SWF file](swf/swf-decompileSwfFile.md) - 2021-08-06
 
 ---
 
