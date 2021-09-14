@@ -2,7 +2,7 @@
 
 You can also view this list at [https://pages.tdpain.net/til](https://pages.tdpain.net/til).
 
-As of the last count, there are 28 TILs!
+As of the last count, there are 29 TILs!
 
 ---
 
@@ -48,6 +48,10 @@ As of the last count, there are 28 TILs!
 ### jetbrains
 
 * [Scopes in JetBrains IDEs](jetbrains/jetbrains-scopes.md) - 2021-06-24
+
+### linux
+
+* [Install a root CA certificate to an Ubuntu (or derivatives) system](linux/linux-installCACertificate.md) - 2021-09-14
 
 ### misc
 
