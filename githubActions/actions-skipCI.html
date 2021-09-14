@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Skip running CI on `push` or `pull_request` events - akp's TILs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Lato&display=swap');
+
+            :root {
+                --font-monospace: 'Inconsolata', monospace;
+                --font-sansserif: 'Lato', sans-serif;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: var(--font-monospace);
+                font-weight: 700;
+            }
+
+            body {
+                font-family: var(--font-sansserif);
+                padding: 0 2em 2em 2em;
+            }
+        </style>
+
+        
+
+    </head>
+
+    <body>
+    
+        <div><h1>Skip running CI on `push` or `pull_request` events</h1><p><a rel='noopener' href='../'>Back to index</a><br>Date: 2021-05-21<br>Category: githubActions</p></div>
+
+        <hr>
+
+        <p>Commits will not run a GitHub Actions workflow if one of the following strings are present in a specific place of your Git commit.</p>
+<ul>
+<li><code>[skip ci]</code></li>
+<li><code>[ci skip]</code></li>
+<li><code>[no ci]</code></li>
+<li><code>[skip actions]</code></li>
+<li><code>[actions skip]</code></li>
+</ul>
+<h2><code>push</code> events</h2>
+<p>If one of the above strings is present in any of the commit messages in your push, no workflows will be run on any of those commits.</p>
+<h2><code>pull_request</code> events</h2>
+<p>If the <code>HEAD</code> commit in a PR includes any of the following strings in the commit message, no workflows will be run on that pull request.</p>
+<hr>
+<p><a href="https://github.blog/changelog/2021-02-08-github-actions-skip-pull-request-and-push-workflows-with-skip-ci/">Source</a></p>
+
+
+    </body>
+
+</html>

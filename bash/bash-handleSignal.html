@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Handle SIGINT - akp's TILs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Lato&display=swap');
+
+            :root {
+                --font-monospace: 'Inconsolata', monospace;
+                --font-sansserif: 'Lato', sans-serif;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: var(--font-monospace);
+                font-weight: 700;
+            }
+
+            body {
+                font-family: var(--font-sansserif);
+                padding: 0 2em 2em 2em;
+            }
+        </style>
+
+        
+
+    </head>
+
+    <body>
+    
+        <div><h1>Handle SIGINT</h1><p><a href='../' rel='noopener'>Back to index</a><br>Date: 2021-06-24<br>Category: bash</p></div>
+
+        <hr>
+
+        <pre style="background-color:#fff"><span style="color:#0086b3">trap</span> my_function INT
+my_function<span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;hello!&#34;</span>; <span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#0086b3">trap</span> <span style="color:#d14">&#34;echo &#39;hello&#39;;&#34;</span> INT
+</pre><p>Both function identially.</p>
+
+
+    </body>
+
+</html>

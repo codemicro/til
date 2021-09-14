@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Loading JSON into a class using Marshmallow Dataclasses - akp's TILs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Lato&display=swap');
+
+            :root {
+                --font-monospace: 'Inconsolata', monospace;
+                --font-sansserif: 'Lato', sans-serif;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: var(--font-monospace);
+                font-weight: 700;
+            }
+
+            body {
+                font-family: var(--font-sansserif);
+                padding: 0 2em 2em 2em;
+            }
+        </style>
+
+        
+
+    </head>
+
+    <body>
+    
+        <div><h1>Loading JSON into a class using Marshmallow Dataclasses</h1><p><a href='../' rel='noopener'>Back to index</a><br>Date: 2021-06-02<br>Category: python</p></div>
+
+        <hr>
+
+        <h2>Simple example</h2>
+<p>Marshal the following JSON in to a class:</p>
+<pre style="background-color:#fff"><span style="color:#000;font-weight:bold">from</span> <span style="color:#555">marshmallow_dataclass</span> <span style="color:#000;font-weight:bold">import</span> dataclass
+
+<span style="color:#3c5d5d;font-weight:bold">@dataclass</span>
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Person</span>:
+    name: <span style="color:#0086b3">str</span>
+    perferred_colour: <span style="color:#0086b3">str</span>
+    has_availability: <span style="color:#0086b3">bool</span>
+
+<span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">main</span>():
+    jsonString <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#39;{&#34;name&#34;: &#34;Abigail&#34;, &#34;preferred_colour&#34;: &#34;orange&#34;, &#34;has_availability&#34;: true}&#39;</span>
+
+    thePerson <span style="color:#000;font-weight:bold">=</span> Person<span style="color:#000;font-weight:bold">.</span>Schema()<span style="color:#000;font-weight:bold">.</span>loads(jsonString)
+    <span style="color:#998;font-style:italic"># or</span>
+    <span style="color:#998;font-style:italic"># thePerson = Person.Schema().load(json.loads(parsedJSON))</span>
+
+    thePerson<span style="color:#000;font-weight:bold">.</span>name <span style="color:#998;font-style:italic"># -&gt; &#34;Abigail&#34;</span>
+</pre><h2>Loading arrays</h2>
+<pre style="background-color:#fff"><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">main</span>():
+    jsonString <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;&#34;&#34;
+</span><span style="color:#d14">    [
+</span><span style="color:#d14">        {&#34;name&#34;: &#34;Abigail&#34;, &#34;preferred_colour&#34;: &#34;orange&#34;, &#34;has_availability&#34;: true},
+</span><span style="color:#d14">        {&#34;name&#34;: &#34;Keira&#34;, &#34;preferred_colour&#34;: &#34;red&#34;, &#34;has_availability&#34;: false}
+</span><span style="color:#d14">    ]
+</span><span style="color:#d14">    &#34;&#34;&#34;</span>
+
+    persons <span style="color:#000;font-weight:bold">=</span> Person<span style="color:#000;font-weight:bold">.</span>Schema(many<span style="color:#000;font-weight:bold">=</span><span style="color:#999">True</span>)<span style="color:#000;font-weight:bold">.</span>loads(jsonString)
+
+    persons[<span style="color:#099">0</span>]<span style="color:#000;font-weight:bold">.</span>name <span style="color:#998;font-style:italic"># -&gt; &#34;Abigail&#34;</span>
+    persons[<span style="color:#099">1</span>]<span style="color:#000;font-weight:bold">.</span>name <span style="color:#998;font-style:italic"># -&gt; &#34;Keira&#34;</span>
+</pre><h2>Selectively loading fields</h2>
+<pre style="background-color:#fff"><span style="color:#000;font-weight:bold">import</span> <span style="color:#555">marshmallow</span>
+
+<span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">main</span>():
+    jsonString <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#39;{&#34;name&#34;: &#34;Abigail&#34;, &#34;preferred_colour&#34;: &#34;orange&#34;, &#34;has_availability&#34;: true, &#34;height&#34;: 172}&#39;</span>
+
+    thePerson <span style="color:#000;font-weight:bold">=</span> Person<span style="color:#000;font-weight:bold">.</span>Schema(unknown<span style="color:#000;font-weight:bold">=</span>marshmallow<span style="color:#000;font-weight:bold">.</span>EXCLUDE)<span style="color:#000;font-weight:bold">.</span>loads(jsonString)
+    
+    thePerson<span style="color:#000;font-weight:bold">.</span>name <span style="color:#998;font-style:italic"># -&gt; &#34;Abigail&#34;</span>
+</pre><h2>Optional fields</h2>
+<pre style="background-color:#fff"><span style="color:#000;font-weight:bold">from</span> <span style="color:#555">typing</span> <span style="color:#000;font-weight:bold">import</span> Optional
+
+<span style="color:#3c5d5d;font-weight:bold">@dataclass</span>
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Person</span>:
+    name: <span style="color:#0086b3">str</span>
+    perferred_colour: <span style="color:#0086b3">str</span>
+    has_availability: <span style="color:#0086b3">bool</span>
+    eye_colour: Optional[<span style="color:#0086b3">str</span>]
+
+<span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">main</span>():
+    jsonString <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;&#34;&#34;
+</span><span style="color:#d14">    [
+</span><span style="color:#d14">        {&#34;name&#34;: &#34;Abigail&#34;, &#34;preferred_colour&#34;: &#34;orange&#34;, &#34;has_availability&#34;: true},
+</span><span style="color:#d14">        {&#34;name&#34;: &#34;Keira&#34;, &#34;preferred_colour&#34;: &#34;red&#34;, &#34;has_availability&#34;: false, &#34;eye_colour&#34;: &#34;green&#34;}
+</span><span style="color:#d14">    ]
+</span><span style="color:#d14">    &#34;&#34;&#34;</span>
+
+    persons <span style="color:#000;font-weight:bold">=</span> Person<span style="color:#000;font-weight:bold">.</span>Schema(many<span style="color:#000;font-weight:bold">=</span><span style="color:#999">True</span>)<span style="color:#000;font-weight:bold">.</span>loads(jsonString)
+
+    persons[<span style="color:#099">0</span>]<span style="color:#000;font-weight:bold">.</span>eye_colour <span style="color:#998;font-style:italic"># -&gt; None</span>
+    persons[<span style="color:#099">1</span>]<span style="color:#000;font-weight:bold">.</span>eye_colour <span style="color:#998;font-style:italic"># -&gt; &#34;green&#34;</span>
+</pre><h2>Custom schemas</h2>
+<p>Any arguments passed to <code>Classname.Schema</code> can also be put into their own, dedicated class.</p>
+<pre style="background-color:#fff"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">_DefaultSchema</span>(marshmallow<span style="color:#000;font-weight:bold">.</span>Schema):
+    <span style="color:#000;font-weight:bold">def</span> __init__(<span style="color:#999">self</span>, <span style="color:#000;font-weight:bold">*</span>args, <span style="color:#000;font-weight:bold">**</span>kwargs):
+        <span style="color:#0086b3">super</span>()<span style="color:#000;font-weight:bold">.</span>__init__(<span style="color:#000;font-weight:bold">*</span>args, <span style="color:#000;font-weight:bold">**</span>kwargs)
+        <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>unknown <span style="color:#000;font-weight:bold">=</span> marshmallow<span style="color:#000;font-weight:bold">.</span>EXCLUDE
+        <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>many <span style="color:#000;font-weight:bold">=</span> <span style="color:#999">True</span>
+
+<span style="color:#3c5d5d;font-weight:bold">@dataclass</span>(base_schema<span style="color:#000;font-weight:bold">=</span>_DefaultSchema)
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Person</span>:
+    name: <span style="color:#0086b3">str</span>
+    perferred_colour: <span style="color:#0086b3">str</span>
+    has_availability: <span style="color:#0086b3">bool</span>
+    eye_colour: Optional[<span style="color:#0086b3">str</span>]
+
+<span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">main</span>():
+    persons <span style="color:#000;font-weight:bold">=</span> Person<span style="color:#000;font-weight:bold">.</span>Schema()<span style="color:#000;font-weight:bold">.</span>loads(jsonString)
+
+    persons[<span style="color:#099">0</span>]<span style="color:#000;font-weight:bold">.</span>eye_colour <span style="color:#998;font-style:italic"># -&gt; None</span>
+    persons[<span style="color:#099">1</span>]<span style="color:#000;font-weight:bold">.</span>eye_colour <span style="color:#998;font-style:italic"># -&gt; &#34;green&#34;</span>
+</pre><h2>Reference</h2>
+<p><a href="https://github.com/lovasoa/marshmallow_dataclass">https://github.com/lovasoa/marshmallow_dataclass</a></p>
+
+
+    </body>
+
+</html>

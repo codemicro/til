@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Copy to the global clipboard from the command line - akp's TILs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Lato&display=swap');
+
+            :root {
+                --font-monospace: 'Inconsolata', monospace;
+                --font-sansserif: 'Lato', sans-serif;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: var(--font-monospace);
+                font-weight: 700;
+            }
+
+            body {
+                font-family: var(--font-sansserif);
+                padding: 0 2em 2em 2em;
+            }
+        </style>
+
+        
+
+    </head>
+
+    <body>
+    
+        <div><h1>Copy to the global clipboard from the command line</h1><p><a rel='noopener' href='../'>Back to index</a><br>Date: 2021-05-27<br>Category: bash</p></div>
+
+        <hr>
+
+        <p>It's possible to write to the global clipboard from the command line using <code>xclip</code>.</p>
+<pre style="background-color:#fff">sudo apt install xclip
+
+cat file.txt | xclip -selection clipboard
+</pre><p>You can then paste this content using CTRL+V as usual.</p>
+
+
+    </body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Get the last modified date of a file - akp's TILs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Lato&display=swap');
+
+            :root {
+                --font-monospace: 'Inconsolata', monospace;
+                --font-sansserif: 'Lato', sans-serif;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: var(--font-monospace);
+                font-weight: 700;
+            }
+
+            body {
+                font-family: var(--font-sansserif);
+                padding: 0 2em 2em 2em;
+            }
+        </style>
+
+        
+
+    </head>
+
+    <body>
+    
+        <div><h1>Get the last modified date of a file</h1><p><a href='../' rel='noopener'>Back to index</a><br>Date: 2021-05-21<br>Category: git</p></div>
+
+        <hr>
+
+        <p>To get the last modified date of a committed file in a Git repository, the following command can be run:</p>
+<pre style="background-color:#fff">git log -1 --format<span style="color:#000;font-weight:bold">=</span>%cd <span style="color:#008080">$FILENAME</span>
+<span style="color:#998;font-style:italic"># Fri May 21 00:13:26 2021 +0100</span>
+</pre>
+
+    </body>
+
+</html>

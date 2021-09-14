@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Labels in Golang - akp's TILs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Lato&display=swap');
+
+            :root {
+                --font-monospace: 'Inconsolata', monospace;
+                --font-sansserif: 'Lato', sans-serif;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: var(--font-monospace);
+                font-weight: 700;
+            }
+
+            body {
+                font-family: var(--font-sansserif);
+                padding: 0 2em 2em 2em;
+            }
+        </style>
+
+        
+
+    </head>
+
+    <body>
+    
+        <div><h1>Labels in Golang</h1><p><a href='../' rel='noopener'>Back to index</a><br>Date: 2021-05-21<br>Category: go</p></div>
+
+        <hr>
+
+        <p>Golang supports the use of labels for managing control flow around a program.</p>
+<p>For example:</p>
+<pre style="background-color:#fff"><span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">myThing</span>() {
+    fmt.<span style="color:#900;font-weight:bold">Println</span>(<span style="color:#d14">&#34;one...&#34;</span>)
+    <span style="color:#000;font-weight:bold">goto</span> three
+    fmt.<span style="color:#900;font-weight:bold">Println</span>(<span style="color:#d14">&#34;two...&#34;</span>)
+three:
+    fmt.<span style="color:#900;font-weight:bold">Println</span>(<span style="color:#d14">&#34;three!&#34;</span>)
+}
+
+<span style="color:#900;font-weight:bold">myThing</span>() <span style="color:#998;font-style:italic">// &#34;one...\nthree!&#34;
+</span></pre><h2>Use in loops</h2>
+<p>Labels can also be used incombination with the <code>continue</code> and <code>break</code> keywords, for example:</p>
+<pre style="background-color:#fff">outer:
+    <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">:=</span> <span style="color:#099">0</span>; i &lt; <span style="color:#099">5</span>; i <span style="color:#000;font-weight:bold">+=</span> <span style="color:#099">1</span> {
+        <span style="color:#000;font-weight:bold">for</span> k <span style="color:#000;font-weight:bold">:=</span> <span style="color:#099">0</span>; k &lt; <span style="color:#099">10</span>; k <span style="color:#000;font-weight:bold">+=</span> <span style="color:#099">1</span> {
+            <span style="color:#000;font-weight:bold">if</span> k <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">5</span> {
+                <span style="color:#000;font-weight:bold">continue</span> outer <span style="color:#998;font-style:italic">// or `break outer`
+</span><span style="color:#998;font-style:italic"></span>            }
+            fmt.<span style="color:#900;font-weight:bold">Println</span>(k)
+        }
+    }
+
+<span style="color:#998;font-style:italic">// -&gt; &#34;0 1 2 3 4 0 1 2 3 4 ...&#34;
+</span></pre><p><code>goto</code> is used in the standard library in this manner.</p>
+<h2>Limitations</h2>
+<ol>
+<li>If defined, a label must be used</li>
+<li>Labels can only be used within the scope of the function they're defined in</li>
+</ol>
+
+
+    </body>
+
+</html>

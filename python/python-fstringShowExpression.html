@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Show the used expression in an f-string - akp's TILs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Lato&display=swap');
+
+            :root {
+                --font-monospace: 'Inconsolata', monospace;
+                --font-sansserif: 'Lato', sans-serif;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: var(--font-monospace);
+                font-weight: 700;
+            }
+
+            body {
+                font-family: var(--font-sansserif);
+                padding: 0 2em 2em 2em;
+            }
+        </style>
+
+        
+
+    </head>
+
+    <body>
+    
+        <div><h1>Show the used expression in an f-string</h1><p><a href='../' rel='noopener'>Back to index</a><br>Date: 2021-06-08<br>Category: python</p></div>
+
+        <hr>
+
+        <p><em>Available in Python 3.8+</em></p>
+<p>Useful for debugging!</p>
+<pre style="background-color:#fff">myVar <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">list</span>(<span style="color:#0086b3">range</span>(<span style="color:#099">4</span>))
+<span style="color:#000;font-weight:bold">print</span>(f<span style="color:#d14">&#34;{myVar=}&#34;</span>) <span style="color:#998;font-style:italic"># -&gt; &#34;myVar=[1,2,3,4]&#34;</span>
+
+thing <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">4</span>
+<span style="color:#000;font-weight:bold">print</span>(f<span style="color:#d14">&#34;{thing == 4=}&#34;</span>) <span style="color:#998;font-style:italic"># -&gt; &#34;thing == 4=True&#34;</span>
+
+<span style="color:#998;font-style:italic"># why you would want to do this, I do not know - however..</span>
+<span style="color:#000;font-weight:bold">print</span>(f<span style="color:#d14">&#34;{&#39;hi=}&#34;</span>) <span style="color:#998;font-style:italic"># -&gt; &#34;&#39;hi&#39;=&#39;hi&#39;&#34;</span>
+</pre><p>See also: <a href="https://docs.python.org/3/reference/lexical_analysis.html#f-strings">Formatted string literals</a></p>
+<p>Source: <a href="https://reddit.com/r/learnpython/comments/nur6o9/til_ive_been_making_debugging_statements_harder/">Reddit</a></p>
+
+
+    </body>
+
+</html>

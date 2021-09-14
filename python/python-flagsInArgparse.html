@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Defining a flag using `argparse` - akp's TILs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Lato&display=swap');
+
+            :root {
+                --font-monospace: 'Inconsolata', monospace;
+                --font-sansserif: 'Lato', sans-serif;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: var(--font-monospace);
+                font-weight: 700;
+            }
+
+            body {
+                font-family: var(--font-sansserif);
+                padding: 0 2em 2em 2em;
+            }
+        </style>
+
+        
+
+    </head>
+
+    <body>
+    
+        <div><h1>Defining a flag using `argparse`</h1><p><a rel='noopener' href='../'>Back to index</a><br>Date: 2021-06-04<br>Category: python</p></div>
+
+        <hr>
+
+        <pre style="background-color:#fff"><span style="color:#000;font-weight:bold">import</span> <span style="color:#555">argparse</span>
+
+parser <span style="color:#000;font-weight:bold">=</span> argparse<span style="color:#000;font-weight:bold">.</span>ArgumentParser()
+
+<span style="color:#998;font-style:italic"># actions=&#34;store_const&#34; is used to make this argument behave like a flag (you don&#39;t have to specify `-d True` or</span>
+<span style="color:#998;font-style:italic"># `-d False`, just `-d`)</span>
+<span style="color:#998;font-style:italic"># See https://docs.python.org/3/library/argparse.html#action</span>
+parser<span style="color:#000;font-weight:bold">.</span>add_argument(
+    <span style="color:#d14">&#34;-d&#34;</span>, <span style="color:#d14">&#34;--debug&#34;</span>, help<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;enables debug mode&#34;</span>, action<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;store_const&#34;</span>, const<span style="color:#000;font-weight:bold">=</span><span style="color:#999">True</span>
+)
+</pre>
+
+    </body>
+
+</html>

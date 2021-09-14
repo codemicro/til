@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Get the PID of the last run command - akp's TILs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Lato&display=swap');
+
+            :root {
+                --font-monospace: 'Inconsolata', monospace;
+                --font-sansserif: 'Lato', sans-serif;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: var(--font-monospace);
+                font-weight: 700;
+            }
+
+            body {
+                font-family: var(--font-sansserif);
+                padding: 0 2em 2em 2em;
+            }
+        </style>
+
+        
+
+    </head>
+
+    <body>
+    
+        <div><h1>Get the PID of the last run command</h1><p><a rel='noopener' href='../'>Back to index</a><br>Date: 2021-06-24<br>Category: bash</p></div>
+
+        <hr>
+
+        <p>If the previous command is still running, it's possible to get the PID of the last run commad using the <code>$!</code> variable.</p>
+<pre style="background-color:#fff">➜ til git:<span style="color:#000;font-weight:bold">(</span>master<span style="color:#000;font-weight:bold">)</span>  sleep <span style="color:#099">15</span> &amp;
+<span style="color:#000;font-weight:bold">[</span>1<span style="color:#000;font-weight:bold">]</span> <span style="color:#099">7652</span>
+➜ til git:<span style="color:#000;font-weight:bold">(</span>master<span style="color:#000;font-weight:bold">)</span>  <span style="color:#0086b3">kill</span> <span style="color:#008080">$!</span>
+<span style="color:#000;font-weight:bold">[</span>1<span style="color:#000;font-weight:bold">]</span>+  Terminated              sleep <span style="color:#099">15</span>
+</pre><p>This also works if the command has terminated.</p>
+<pre style="background-color:#fff">➜ til git:<span style="color:#000;font-weight:bold">(</span>master<span style="color:#000;font-weight:bold">)</span>  sleep <span style="color:#099">2</span>
+➜ til git:<span style="color:#000;font-weight:bold">(</span>master<span style="color:#000;font-weight:bold">)</span>  <span style="color:#0086b3">echo</span> <span style="color:#008080">$!</span>
+<span style="color:#099">7652</span>
+</pre>
+
+    </body>
+
+</html>

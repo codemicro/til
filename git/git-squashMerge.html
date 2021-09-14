@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Merge a branch while squashing commits - akp's TILs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Lato&display=swap');
+
+            :root {
+                --font-monospace: 'Inconsolata', monospace;
+                --font-sansserif: 'Lato', sans-serif;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: var(--font-monospace);
+                font-weight: 700;
+            }
+
+            body {
+                font-family: var(--font-sansserif);
+                padding: 0 2em 2em 2em;
+            }
+        </style>
+
+        
+
+    </head>
+
+    <body>
+    
+        <div><h1>Merge a branch while squashing commits</h1><p><a rel='noopener' href='../'>Back to index</a><br>Date: 2021-07-11<br>Category: git</p></div>
+
+        <hr>
+
+        <pre style="background-color:#fff">git checkout master <span style="color:#998;font-style:italic"># switch to branch to merge onto</span>
+git merge --squash dev/yourBranch <span style="color:#998;font-style:italic"># merge</span>
+git commit <span style="color:#998;font-style:italic"># commit, and edit commit message</span>
+</pre>
+
+    </body>
+
+</html>

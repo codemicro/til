@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Run a command in a background process - akp's TILs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Lato&display=swap');
+
+            :root {
+                --font-monospace: 'Inconsolata', monospace;
+                --font-sansserif: 'Lato', sans-serif;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: var(--font-monospace);
+                font-weight: 700;
+            }
+
+            body {
+                font-family: var(--font-sansserif);
+                padding: 0 2em 2em 2em;
+            }
+        </style>
+
+        
+
+    </head>
+
+    <body>
+    
+        <div><h1>Run a command in a background process</h1><p><a rel='noopener' href='../'>Back to index</a><br>Date: 2021-05-25<br>Category: bash</p></div>
+
+        <hr>
+
+        <p>To run a command in a new background process, it's possible to use the <code>&amp;</code> in Bash.</p>
+<pre style="background-color:#fff">nemo . &amp;
+<span style="color:#998;font-style:italic"># [2] 69062</span>
+</pre><p>This, for example, will open the Nemo file manager in the background. It'll continue to send the contents of STDOUT and STDERR to our Bash session, so we can pipe all of that into <code>/dev/null</code> instead.</p>
+<pre style="background-color:#fff">nemo . &amp;&gt;/dev/null &amp;
+<span style="color:#998;font-style:italic"># [2] 68983</span>
+</pre><p>(These created processes can be killed with <code>kill &lt;pid&gt;</code>, eg <code>kill 68983</code>)</p>
+
+
+    </body>
+
+</html>

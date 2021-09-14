@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Continue a GitHub Actions workflow if a step errors - akp's TILs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Lato&display=swap');
+
+            :root {
+                --font-monospace: 'Inconsolata', monospace;
+                --font-sansserif: 'Lato', sans-serif;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: var(--font-monospace);
+                font-weight: 700;
+            }
+
+            body {
+                font-family: var(--font-sansserif);
+                padding: 0 2em 2em 2em;
+            }
+        </style>
+
+        
+
+    </head>
+
+    <body>
+    
+        <div><h1>Continue a GitHub Actions workflow if a step errors</h1><p><a rel='noopener' href='../'>Back to index</a><br>Date: 2021-05-23<br>Category: githubActions</p></div>
+
+        <hr>
+
+        <p>If a step in a GitHub Actions workflow step fails (ie. returns an exit code that's not zero), the entire workflow run will abort and report as failed.</p>
+<p>In some situations, it may be impossible to avoid a step returning a non-zero exit code. This can be dealt with using the <a href="https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepscontinue-on-error"><code>continue-on-error</code> parameter</a> for a step.</p>
+<pre style="background-color:#fff">- <span style="color:#000;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Git<span style="color:#bbb"> </span>commit<span style="color:#bbb"> </span>and<span style="color:#bbb"> </span>push<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000;font-weight:bold">run</span>:<span style="color:#bbb"> </span><span style="color:#d14">|
+</span><span style="color:#d14">    git config user.email &#39;actions@github.com&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>git<span style="color:#bbb"> </span>config<span style="color:#bbb"> </span>user.name<span style="color:#bbb"> </span><span style="color:#d14">&#39;github-actions&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>git<span style="color:#bbb"> </span>add<span style="color:#bbb"> </span>README.md<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>git<span style="color:#bbb"> </span>commit<span style="color:#bbb"> </span>-m<span style="color:#bbb"> </span><span style="color:#d14">&#39;Update README.md&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>git<span style="color:#bbb"> </span>push<span style="color:#bbb"> </span>origin<span style="color:#bbb"> </span>HEAD:${{<span style="color:#bbb"> </span>github.ref<span style="color:#bbb"> </span>}}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000;font-weight:bold">continue-on-error</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span><span style="color:#bbb">
+</span></pre><p>In this example, the workflow will complete as normal, even if Git complains that there is <code>nothing to commit</code> and that the <code>working tree clean</code>, like it would if nothing had been changed.</p>
+
+
+    </body>
+
+</html>

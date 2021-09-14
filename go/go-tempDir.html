@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Working with the `/tmp` directory - akp's TILs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Lato&display=swap');
+
+            :root {
+                --font-monospace: 'Inconsolata', monospace;
+                --font-sansserif: 'Lato', sans-serif;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: var(--font-monospace);
+                font-weight: 700;
+            }
+
+            body {
+                font-family: var(--font-sansserif);
+                padding: 0 2em 2em 2em;
+            }
+        </style>
+
+        
+
+    </head>
+
+    <body>
+    
+        <div><h1>Working with the `/tmp` directory</h1><p><a rel='noopener' href='../'>Back to index</a><br>Date: 2021-07-12<br>Category: go</p></div>
+
+        <hr>
+
+        <p>All files within the <code>/tmp</code> directory require the sticky bit to be set.</p>
+<p>When creating a directory, this can be achieved as follows:</p>
+<pre style="background-color:#fff">tempDir <span style="color:#000;font-weight:bold">:=</span> <span style="color:#900;font-weight:bold">getTemporaryDir</span>()
+_ = os.<span style="color:#900;font-weight:bold">Mkdir</span>(tempDir, os.ModeDir|os.ModeSticky|os.<span style="color:#900;font-weight:bold">FileMode</span>(<span style="color:#099">0700</span>))
+</pre>
+
+    </body>
+
+</html>

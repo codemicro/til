@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exit codes in Bash scripts - akp's TILs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Lato&display=swap');
+
+            :root {
+                --font-monospace: 'Inconsolata', monospace;
+                --font-sansserif: 'Lato', sans-serif;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: var(--font-monospace);
+                font-weight: 700;
+            }
+
+            body {
+                font-family: var(--font-sansserif);
+                padding: 0 2em 2em 2em;
+            }
+        </style>
+
+        
+
+    </head>
+
+    <body>
+    
+        <div><h1>Exit codes in Bash scripts</h1><p><a rel='noopener' href='../'>Back to index</a><br>Date: 2021-06-16<br>Category: bash</p></div>
+
+        <hr>
+
+        <p>The last exit code of a command can be obtained through the <code>$?</code> variable.</p>
+<pre><code>➜ ~: echo $?
+0
+</code></pre>
+<p>In a Bash script, the <code>exit</code> command can be used to, well, exit with a given exit code.</p>
+<pre style="background-color:#fff"><span style="color:#0086b3">exit</span> <span style="color:#099">2</span>
+</pre>
+
+    </body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Horizontally and vertically center an item in its parent - akp's TILs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Lato&display=swap');
+
+            :root {
+                --font-monospace: 'Inconsolata', monospace;
+                --font-sansserif: 'Lato', sans-serif;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: var(--font-monospace);
+                font-weight: 700;
+            }
+
+            body {
+                font-family: var(--font-sansserif);
+                padding: 0 2em 2em 2em;
+            }
+        </style>
+
+        
+
+    </head>
+
+    <body>
+    
+        <div><h1>Horizontally and vertically center an item in its parent</h1><p><a rel='noopener' href='../'>Back to index</a><br>Date: 2021-05-27<br>Category: htmlcss</p></div>
+
+        <hr>
+
+        <pre style="background-color:#fff">&lt;<span style="color:#000080">head</span>&gt;
+&lt;<span style="color:#000080">style</span>&gt;
+	.<span style="color:#458;font-weight:bold">bg</span> {
+		background-colour: <span style="color:#000;font-weight:bold">pink</span>;
+		<span style="color:#000;font-weight:bold">width</span>: <span style="color:#099">100</span><span style="color:#458;font-weight:bold">px</span>;
+		<span style="color:#000;font-weight:bold">height</span>: <span style="color:#099">100</span><span style="color:#458;font-weight:bold">px</span>;
+	}
+
+	.<span style="color:#458;font-weight:bold">center</span> {
+		<span style="color:#000;font-weight:bold">display</span>: <span style="color:#000;font-weight:bold">flex</span>; 
+		<span style="color:#000;font-weight:bold">justify-content</span>: <span style="color:#000;font-weight:bold">center</span>;
+		<span style="color:#000;font-weight:bold">align-items</span>: <span style="color:#000;font-weight:bold">center</span>;
+	}
+&lt;/<span style="color:#000080">style</span>&gt;
+&lt;/<span style="color:#000080">head</span>&gt;
+
+&lt;<span style="color:#000080">body</span>&gt;
+&lt;<span style="color:#000080">div</span> <span style="color:#008080">class</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;bg center&#34;</span>&gt;
+	&lt;<span style="color:#000080">p</span>&gt;Hello!&lt;/<span style="color:#000080">p</span>&gt;
+&lt;/<span style="color:#000080">div</span>&gt;
+&lt;/<span style="color:#000080">body</span>&gt;
+</pre><p>Result:</p>
+<p><img src="css-centerItemExample.png" alt="result"></p>
+
+
+    </body>
+
+</html>
